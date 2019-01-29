@@ -6,7 +6,7 @@ from utils.exceptions import *
 
 from utils.functions import create_intervals, TIMEFRAMES
 from utils.downloader import make_downloader
-from utils.merge_results import ohlcv_to_pandas, merge_df
+from utils.merge_results import ohlcv_to_pandas, merge_df, col_names
 from utils.iterlist import iterlist
 
 KNOWN_EXCHANGES = [
@@ -47,6 +47,7 @@ def download(exchange,timeframe,symbol,start,end,output):
         else:
             res = part.sort_index()
 
-    res[col_names].to_csv(os.path.join(output,"{}_{}_{}.csv".format(exchange,symbol,timeframe)))
+    # TODO: fix "symbol" in next line
+    res[col_names].to_csv(os.path.join(output,"{}_{}_{}.csv".format(exchange,"symbol",timeframe)))
 if __name__ == '__main__':
     download()

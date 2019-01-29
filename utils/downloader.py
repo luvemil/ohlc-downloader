@@ -22,6 +22,7 @@ class Downloader:
             symbol=symbol,
             since=start_ts,
             timeframe=timeframe,
+            limit=5000,
             params={
                 'sort':-1,
                 'end': end_ts

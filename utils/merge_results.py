@@ -21,4 +21,4 @@ def ohlcv_to_pandas(res_l):
     return slice_df.sort_index()
 
 def merge_df(a_df,b_df):
-    return pd.concat(a_df,b_df)
+    return pd.concat([a_df,b_df])
