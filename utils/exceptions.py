@@ -14,3 +14,6 @@ class EmptyPartitionError(BaseCryptoDownloaderError):
 
 class NotCompatibleExchange(BaseCryptoDownloaderError):
     pass
+
+class UnknownExchangeError(BaseCryptoDownloaderError):
+    pass
