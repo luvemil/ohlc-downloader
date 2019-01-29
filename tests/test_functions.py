@@ -6,7 +6,7 @@ from dateutil.tz import tzlocal
 
 from utils.functions import *
 
-class ParitioningFunctionTest(unittest.TestCase):
+class PartioningFunctionTest(unittest.TestCase):
     def test_round_timeframe_notz(self):
         tf = '5m'
         ts_dt = parser.parse('2019-01-01 15:46')
