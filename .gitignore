@@ -117,3 +117,4 @@ dmypy.json
 
 # Notebooks directory
 notebooks/
+data/
