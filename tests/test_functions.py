@@ -47,5 +47,8 @@ class ParitioningFunctionTest(unittest.TestCase):
 
         self.assertSequenceEqual(expected_res,res)
 
+    # TODO:
+    # - add test for raising correcly
+
 if __name__ == "__main__":
     unittest.main()
