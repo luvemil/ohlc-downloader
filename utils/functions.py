@@ -2,19 +2,7 @@ import datetime as dt
 from dateutil import parser, tz
 from dateutil.tz import tzlocal
 
-class BaseCryptoDownloaderError(Exception):
-    """Base error class"""
-    pass
-
-class NotAValidTimeZoneError(BaseCryptoDownloaderError):
-    """Raise when a timezone is not valid"""
-    pass
-
-class NotAValidRoundMethodError(BaseCryptoDownloaderError):
-    pass
-
-class EmptyPartitionError(BaseCryptoDownloaderError):
-    pass
+from .exceptions import *
 
 TIMEFRAMES = [
     '1m',
