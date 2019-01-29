@@ -17,3 +17,9 @@ class NotCompatibleExchange(BaseCryptoDownloaderError):
 
 class UnknownExchangeError(BaseCryptoDownloaderError):
     pass
+
+class StrideTooBigError(BaseCryptoDownloaderError):
+    pass
+
+class StrideNotPositiveError(BaseCryptoDownloaderError):
+    pass
