@@ -32,5 +32,9 @@ class Downloader:
         return res
 
 def make_downloader(exchange):
+    """
+    Return a single function to download ohlcv candles with signature:
+    (symbol, start_dt, end_dt, timeframe)
+    """
     d = Downloader(exchange)
     return d.get_ohlcv
