@@ -26,7 +26,7 @@ OUTPUT_DIR = 'data/'
 TIME_FORMAT_STRING = "%FT%H-%M-%S%Z"
 
 @click.command()
-@click.option('-e','--exchange', default='bitfinex')
+@click.option('--exchange', default='bitfinex')
 @click.option('-t','--timeframe', default='1m', type=click.Choice(TIMEFRAMES))
 @click.option('--symbol',default='XRP/USDT')
 # NOTE: it is not clear how to get the correct accepted symbol
