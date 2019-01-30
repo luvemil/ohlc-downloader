@@ -61,7 +61,7 @@ def create_intervals(start_time,end_time=None,timeframe='1m',interval_max_size=L
     """
     start_dt = round_timeframe(ensure_tz(parser.parse(start_time)),timeframe)
     if end_time is None:
-        end_dt = dt.datetime.now(tzlocal())
+        end_dt = dt.datetime.now(start_dt.tzinfo)
     else:
         end_dt = ensure_tz(parser.parse(end_time))
     end_dt = round_timeframe(end_dt,timeframe,method='CEIL')
