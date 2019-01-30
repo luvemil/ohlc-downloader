@@ -1,6 +1,7 @@
 import click
 import ccxt
 import os
+import sys
 
 from utils.exceptions import *
 
@@ -30,7 +31,10 @@ TIME_FORMAT_STRING = "%FT%H-%M-%S%Z"
 @click.option('-s','--start',required=True)
 @click.option('-e','--end',default=None)
 @click.option('-o','--output',default=OUTPUT_DIR)
-def download(exchange,timeframe,symbol,start,end,output):
+@click.option('--save/--no-save',default=True)
+@click.option('--echo',is_flag=True,default=False,help="If true prints to stdout")
+@click.option('-v','--verbose',is_flag=True,default=False)
+def download(exchange,timeframe,symbol,start,end,output,save,echo,verbose):
     if not exchange in KNOWN_EXCHANGES:
         raise UnknownExchangeError
 
@@ -64,6 +68,17 @@ def download(exchange,timeframe,symbol,start,end,output):
         'start_time': partition[0].strftime(TIME_FORMAT_STRING),
         'end_time': partition[-1].strftime(TIME_FORMAT_STRING)
     }
-    res[col_names].to_csv(os.path.join(output,"{exchange}_{symbol}_{timeframe}_{start_time}_{end_time}.csv".format(**string_params)))
+    out_bufs = []
+    if save:
+        filepath = os.path.join(output,"{exchange}_{symbol}_{timeframe}_{start_time}_{end_time}.csv".format(**string_params))
+        out_bufs.append(filepath)
+    if echo:
+        out_bufs.append(sys.stdout)
+
+    for buf in out_bufs:
+        if verbose and buf is not sys.stdout:
+            click.echo("Saving to {}".format(buf))
+        res[col_names].to_csv(buf)
+
 if __name__ == '__main__':
     download()
