@@ -21,7 +21,7 @@ mkdir -p data
 
 Download with
 ```
-get_ohlc -t 5m -s "2019-01-01 00:00 Z"
+get_ohlc -t 5m -s "2018-01-01 00:00 Z" --keep-index
 ```
 
 ## Options
@@ -33,6 +33,7 @@ Optional:
       --echo: if set, prints output to stdout
   -e, --end: datetime string parsable by dateutil.parser.parse, default: now()
       --exchange: 'bitfinex' is the only one supported for now, default: 'bitfinex'
+      --keep-index: if set, the first column of the output is a stringified version of the referenced timestamp
   -o, --output: output directory, default: data/
       --save/--no-save: boolean flag, determines whether to save on disk
       --symbol: symbols as expected by ccxt, e.g. 'BTC/USDT', default: 'XRP/USDT'

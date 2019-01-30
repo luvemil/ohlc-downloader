@@ -36,7 +36,8 @@ TIME_FORMAT_STRING = "%FT%H-%M-%S%Z"
 @click.option('--save/--no-save',default=True)
 @click.option('--echo',is_flag=True,default=False,help="If true prints to stdout")
 @click.option('-v','--verbose',is_flag=True,default=False)
-def main(exchange,timeframe,symbol,start,end,output,save,echo,verbose):
+@click.option('--keep-index',is_flag=True,default=False)
+def main(exchange,timeframe,symbol,start,end,output,save,echo,verbose,keep_index):
     if not exchange in KNOWN_EXCHANGES:
         raise UnknownExchangeError
 
@@ -80,7 +81,7 @@ def main(exchange,timeframe,symbol,start,end,output,save,echo,verbose):
     for buf in out_bufs:
         if verbose and buf is not sys.stdout:
             click.echo("Saving to {}".format(buf))
-        res[col_names].to_csv(buf)
+        res[col_names].to_csv(buf,index=keep_index)
 
 if __name__ == '__main__':
     main()
