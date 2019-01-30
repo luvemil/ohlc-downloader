@@ -8,6 +8,7 @@ from utils.functions import create_intervals, TIMEFRAMES
 from utils.downloader import make_downloader
 from utils.merge_results import ohlcv_to_pandas, merge_df, col_names
 from utils.iterlist import iterlist
+from utils.post_callbacks import *
 
 KNOWN_EXCHANGES = [
     'bitfinex'
@@ -52,6 +53,8 @@ def download(exchange,timeframe,symbol,start,end,output):
             res = res.sort_index()
         else:
             res = part.sort_index()
+
+    res = ensure_unique_index(ensure_sorted(res))
 
     symbol_id = ex.markets[symbol]['id']
     string_params = {

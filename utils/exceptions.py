@@ -26,3 +26,6 @@ class StrideTooBigError(BaseCryptoDownloaderError):
 
 class StrideNotPositiveError(BaseCryptoDownloaderError):
     pass
+
+class WrongClassError(BaseCryptoDownloaderError):
+    pass
