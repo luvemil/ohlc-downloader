@@ -19,6 +19,7 @@ EXCHANGE_MAKERS = {
 
 OUTPUT_DIR = 'data/'
 
+TIME_FORMAT_STRING = "%FT%H-%M-%S%Z"
 
 @click.command()
 @click.option('-e','--exchange', default='bitfinex')
@@ -30,10 +31,15 @@ OUTPUT_DIR = 'data/'
 @click.option('-o','--output',default=OUTPUT_DIR)
 def download(exchange,timeframe,symbol,start,end,output):
     if not exchange in KNOWN_EXCHANGES:
-        raise
+        raise UnknownExchangeError
 
     ex = EXCHANGE_MAKERS[exchange]()
     get_ohlcv = make_downloader(ex)
+
+    # Check that the symbol is understandable
+    ex.loadMarkets()
+    if not symbol in ex.symbols:
+        raise UnknownSymbolError
 
     partition = create_intervals(start,end,timeframe)
 
@@ -47,7 +53,14 @@ def download(exchange,timeframe,symbol,start,end,output):
         else:
             res = part.sort_index()
 
-    # TODO: fix "symbol" in next line
-    res[col_names].to_csv(os.path.join(output,"{}_{}_{}.csv".format(exchange,"symbol",timeframe)))
+    symbol_id = ex.markets[symbol]['id']
+    string_params = {
+        'exchange': exchange,
+        'symbol': symbol_id,
+        'timeframe': timeframe,
+        'start_time': partition[0].strftime(TIME_FORMAT_STRING),
+        'end_time': partition[-1].strftime(TIME_FORMAT_STRING)
+    }
+    res[col_names].to_csv(os.path.join(output,"{exchange}_{symbol}_{timeframe}_{start_time}_{end_time}.csv".format(**string_params)))
 if __name__ == '__main__':
     download()
