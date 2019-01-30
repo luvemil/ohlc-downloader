@@ -1,15 +1,17 @@
+__version__ = "0.1.0"
+
 import click
 import ccxt
 import os
 import sys
 
-from utils.exceptions import *
+from .utils.exceptions import *
 
-from utils.functions import create_intervals, TIMEFRAMES
-from utils.downloader import make_downloader
-from utils.merge_results import ohlcv_to_pandas, merge_df, col_names
-from utils.iterlist import iterlist
-from utils.post_callbacks import *
+from .utils.functions import create_intervals, TIMEFRAMES
+from .utils.downloader import make_downloader
+from .utils.merge_results import ohlcv_to_pandas, merge_df, col_names
+from .utils.iterlist import iterlist
+from .utils.post_callbacks import *
 
 KNOWN_EXCHANGES = [
     'bitfinex'
@@ -34,7 +36,7 @@ TIME_FORMAT_STRING = "%FT%H-%M-%S%Z"
 @click.option('--save/--no-save',default=True)
 @click.option('--echo',is_flag=True,default=False,help="If true prints to stdout")
 @click.option('-v','--verbose',is_flag=True,default=False)
-def download(exchange,timeframe,symbol,start,end,output,save,echo,verbose):
+def main(exchange,timeframe,symbol,start,end,output,save,echo,verbose):
     if not exchange in KNOWN_EXCHANGES:
         raise UnknownExchangeError
 
@@ -81,4 +83,4 @@ def download(exchange,timeframe,symbol,start,end,output,save,echo,verbose):
         res[col_names].to_csv(buf)
 
 if __name__ == '__main__':
-    download()
+    main()
